@@ -60,12 +60,40 @@ class Fib:
     >>> list(Fib(5))
     [1, 1, 2, 3, 5]
     '''
+    def __init__(self, n=None):
+        self.n = n
 
+    def __repr__(self):
+        if self.n:
+            return f'Fib({self.n})'
+        else:
+            return 'Fib()'
 
+    def __iter__(self):
+        return FibIter(self.n)
+
+    
 class FibIter:
     '''
     This is the iterator helper class for the Fib class.
     '''
+    def __init__(self, n=None):
+        self.n = n
+        self.i = 0
+        self.result = []
+
+    def __next__(self):
+        if self.n:
+            if self.i >= self.n:
+                raise StopIteration
+            else:
+                self.result = fib(self.i)
+                self.i += 1
+                return self.result
+        else:
+            self.result = fib(self.i)
+            self.i += 1
+            return self.result
 
 
 def fib_yield(n=None):
