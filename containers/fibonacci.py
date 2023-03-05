@@ -84,9 +84,9 @@ class FibIter:
 
     def __next__(self):
         if not self.n or self.i < self.n:
-                self.result = fib(self.i)
-                self.i += 1
-                return self.result
+            self.result = fib(self.i)
+            self.i += 1
+            return self.result
         else:
             raise StopIteration
 
