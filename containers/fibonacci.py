@@ -62,6 +62,7 @@ class Fib:
     '''
     def __init__(self, n=None):
         self.n = n
+        self.value = fib(n)
 
     def __repr__(self):
         if self.n:
@@ -96,3 +97,8 @@ def fib_yield(n=None):
     This function returns a generator that computes the first n fibonacci
     numbers. If n is None, then the generator is infinite.
     '''
+    i = 0
+
+    while not n or n > i:
+        yield Fib(i).value
+        i += 1
