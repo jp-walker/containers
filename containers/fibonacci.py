@@ -62,7 +62,7 @@ class Fib:
     '''
     def __init__(self, n=None):
         self.n = n
-        self.value = fib(n)
+        # self.value = fib(n)
 
     def __repr__(self):
         if self.n:
@@ -84,7 +84,7 @@ class FibIter:
         self.result = []
 
     def __next__(self):
-        if not self.n or self.i < self.n:
+        if (self.n is None) or (self.i < self.n):
             self.result = fib(self.i)
             self.i += 1
             return self.result
@@ -99,6 +99,6 @@ def fib_yield(n=None):
     '''
     i = 0
 
-    while not n or n > i:
-        yield Fib(i).value
+    while (n is None) or n > i:
+        yield fib(i)
         i += 1
