@@ -84,6 +84,27 @@ class BST(BinaryTree):
         HINT:
         Create a staticmethod helper function following the pattern of _is_bst_satisfied.
         '''
+        if self.root:
+            return BST._insert(self.root, value)
+        else:
+            self.root = Node(value)
+            return
+
+    @staticmethod
+    def _insert(node, value):
+        if value < node.value:
+            if not node.left:
+                node.left = Node(value)
+                return
+            else:
+                BST._insert(node.left, value)
+
+        elif value > node.value:
+            if not node.right and value > node.value:
+                node.right = Node(value)
+                return
+            else:
+                BST._insert(node.right, value)
 
     def insert_list(self, xs):
         '''
@@ -96,6 +117,9 @@ class BST(BinaryTree):
         Repeatedly call the insert method.
         You cannot get this method to work correctly until you have gotten insert to work correctly.
         '''
+        for e in xs:
+            self.insert(e)
+        return
 
     def __contains__(self, value):
         '''
@@ -110,6 +134,12 @@ class BST(BinaryTree):
         FIXME:
         Implement this function.
         '''
+        if not self.root:
+            return False
+        elif value == self.root.value:
+            return True
+        else:
+            return BST._find(value, self.root)
 
     @staticmethod
     def _find(value, node):
@@ -117,6 +147,19 @@ class BST(BinaryTree):
         FIXME:
         Implement this function.
         '''
+        if value < node.value:
+            if node.left:
+                if node.left.value == value:
+                    return True
+                else:
+                    return BST._find(value, node.left)
+        else:
+            if node.right:
+                if node.right.value == value:
+                    return True
+                else:
+                    return BST._find(value, node.right)
+        return False
 
     def find_smallest(self):
         '''
@@ -148,6 +191,21 @@ class BST(BinaryTree):
         HINT:
         Follow the pattern of the _find_smallest function.
         '''
+        if self.root is None:
+            raise ValueError('Nothing in tree')
+        else:
+            return BST._find_largest(self.root)
+
+    @staticmethod
+    def _find_largest(node):
+        '''
+        This is a helper function for find_smallest and not intended to be called directly by the user.
+        '''
+        assert node is not None
+        if node.right is None:
+            return node.value
+        else:
+            return BST._find_largest(node.right)
 
     def remove(self, value):
         '''
