@@ -20,6 +20,8 @@ class BST(BinaryTree):
         then each element of xs needs to be inserted into the BST.
         '''
         super().__init__()
+        if xs:
+            self.insert_list(xs)
 
     def __repr__(self):
         '''
@@ -71,6 +73,9 @@ class BST(BinaryTree):
             if node.value <= node.right.value:
                 ret &= BST._is_bst_satisfied(node.right)
             else:
+                ret = False
+        if node.left and node.right:
+            if BST._find_largest(node.left) >= BST._find_smallest(node.right):
                 ret = False
         return ret
 
@@ -134,7 +139,7 @@ class BST(BinaryTree):
         FIXME:
         Implement this function.
         '''
-        if not self.root:
+        if self.root is None:
             return False
         elif value == self.root.value:
             return True
@@ -147,13 +152,13 @@ class BST(BinaryTree):
         FIXME:
         Implement this function.
         '''
-        if value < node.value:
+        if value <= node.value:
             if node.left:
                 if node.left.value == value:
                     return True
                 else:
                     return BST._find(value, node.left)
-        else:
+        elif value >= node.value:
             if node.right:
                 if node.right.value == value:
                     return True
@@ -221,6 +226,82 @@ class BST(BinaryTree):
         HINT:
         Use a recursive helper function.
         '''
+        if not self.__contains__(value):
+            return
+        else:
+            return BST._remove(self.root, value)
+
+    @staticmethod
+    def _remove(node, value):
+        if value == node.value:
+            # no children
+            if node.left is None and node.right is None:
+                node = None
+                return node
+            # only left child
+            elif node.left and node.right is None:                    
+                node = node.left
+                return node
+            # only right child
+            elif node.right and node.left is None:
+                node = node.right
+                return node
+            else:
+                succ = BST._find_smallest(node.right)
+                BST._remove(node, succ)
+                node.value = succ
+                return node
+
+        elif value < node.value:
+            if node.left:
+                if node.left.value == value:
+                    # here we go
+                    # no children
+                    if node.left.left is None and node.left.right is None:
+                        node.left = None
+                        return
+                    # is a left child and has a left child
+                    elif node.left.left and node.left.right is None:
+                        node.left = node.left.left
+                        return
+                    # is a left child and has a right child
+                    elif node.left.right and node.left.left is None:
+                        node.left = node.left.right
+                        return
+                    # is a left child and has two children
+                    elif node.left.right and node.left.left:
+                        succ = BST._find_smallest(node.right)
+                        BST._remove(node.right, succ)
+                        node.left.value = succ
+                        return
+            else:
+                return _remove(node.left, value)
+
+        elif value > node.value:
+            if node.right:
+                if node.right.value == value:
+                    # here we go
+                    # no children
+                    if node.right.left is None and node.right.right is None:
+                        node.right = None
+                        return
+                    # is a right child and has a left child
+                    elif node.right.left and node.right.right is None:
+                        node.right = node.right.left
+                        return
+                    # is a right child has a right child
+                    elif node.right.right and node.right.left is None:
+                        node.right = node.right.right
+                        return
+                    # is a right child and has two children
+                    elif node.right.right and node.right.left:
+                        succ = BST._find_smallest(node.right)
+                        BST._remove(node.right, succ)
+                        node.right.value = succ
+                        return
+            else:
+                return _remove(node.right, value)
+        return
 
     def remove_list(self, xs):
         '''
@@ -232,3 +313,9 @@ class BST(BinaryTree):
         HINT:
         See the insert_list function.
         '''
+
+test = BST([0])
+print(test)
+test.remove(0)
+print("contains0 after remove", test.__contains__(0))
+print(test)
