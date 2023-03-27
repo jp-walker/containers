@@ -1,6 +1,7 @@
 '''
 This file implements the AVL Tree data structure.
-The functions in this file are considerably harder than the functions in the BinaryTree and BST files,
+The functions in this file are considerably harder than the functions
+in the BinaryTree and BST files,
 but there are fewer of them.
 '''
 
@@ -48,7 +49,8 @@ class AVLTree(BST):
 
     def is_avl_satisfied(self):
         '''
-        Returns True if the avl tree satisfies that all nodes have a balance factor in [-1,0,1].
+        Returns True if the avl tree satisfies that all nodes have a
+        balance factor in [-1,0,1].
         '''
         return AVLTree._is_avl_satisfied(self.root)
 
@@ -63,7 +65,7 @@ class AVLTree(BST):
             res.append(AVLTree._balance_factor(node))
             res.append(AVLTree._balance_factor(node.left))
             res.append(AVLTree._balance_factor(node.right))
-        ls = [factor in [-1,0,1] for factor in res]
+        ls = [factor in [-1, 0, 1] for factor in res]
         if False in ls:
             return False
         return True
@@ -76,7 +78,8 @@ class AVLTree(BST):
 
         The lecture videos provide a high-level overview of tree rotations,
         and the textbook provides full python code.
-        The textbook's class hierarchy for their AVL tree code is fairly different from our class hierarchy,
+        The textbook's class hierarchy for their AVL tree code is fairly
+        different from our class hierarchy,
         however, so you will have to adapt their code.
         '''
         pivot = node.right
@@ -100,7 +103,8 @@ class AVLTree(BST):
 
         The lecture videos provide a high-level overview of tree rotations,
         and the textbook provides full python code.
-        The textbook's class hierarchy for their AVL tree code is fairly different from our class hierarchy,
+        The textbook's class hierarchy for their AVL tree code is fairly
+        different from our class hierarchy,
         however, so you will have to adapt their code.
         '''
         pivot = node.left
@@ -120,20 +124,23 @@ class AVLTree(BST):
         FIXME:
         Implement this function.
 
-        The lecture videos provide a high-level overview of how to insert into an AVL tree,
+        The lecture videos provide a high-level overview of how to
+        insert into an AVL tree,
         and the textbook provides full python code.
-        The textbook's class hierarchy for their AVL tree code is fairly different from our class hierarchy,
+        The textbook's class hierarchy for their AVL tree code is fairly
+        different from our class hierarchy,
         however, so you will have to adapt their code.
 
         HINT:
         It is okay to add @staticmethod helper functions for this code.
-        The code should look very similar to the code for your insert function for the BST,
+        The code should look very similar to the code for your insert
+        function for the BST,
         but it will also call the left and right rebalancing functions.
         '''
         if self.root:
             AVLTree._insert(self.root, value)
             while not self.is_avl_satisfied:
-                 AVLTree._rebalance(self.root)
+                AVLTree._rebalance(self.root)
         else:
             self.root = Node(value)
         return
@@ -176,4 +183,3 @@ class AVLTree(BST):
                 AVLTree._right_rotate(node)
             else:
                 AVLTree._right_rotate(node)
-

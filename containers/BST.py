@@ -73,7 +73,7 @@ class BST(BinaryTree):
         then compare those sorted lists for equality.
         '''
         ls = self.inorder(self.root, [])
-        ls2 = t2.inorder(self.root,[])
+        ls2 = t2.inorder(self.root, [])
         if ls == ls2:
             return True
         else:
