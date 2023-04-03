@@ -319,5 +319,5 @@ def test__BST_iterable_2(xs):
     xs2 = copy.copy(xs)
     random.shuffle(xs2)
     bst2 = BST(xs2)
-    
+
     assert list(bst1) == list(bst2)
