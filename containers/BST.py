@@ -57,6 +57,39 @@ class BST(BinaryTree):
         if node.right:
             yield from BST.bst_yield(node.right)
 
+    def __eq__(self, t2):
+        '''
+        This method checks to see if the contents of self and t2 are equal.
+        The expression `a == b` desugars to `a.__eq__(b)`.
+
+        NOTE:
+        We only care about "semantic" equality,
+        and not "syntactic" equality.
+        That is, we do not care about the tree structure itself,
+        and only care about the contents of what the tree contains.
+
+        HINT:
+        Convert the contents of both trees into a sorted list,
+        then compare those sorted lists for equality.
+        '''
+        ls = self.inorder(self.root, [])
+        ls2 = t2.inorder(self.root, [])
+        if ls == ls2:
+            return True
+        else:
+            return False
+
+    def inorder(self, start, traversal):
+        '''
+        FIXME:
+        Implement this function by modifying the _print functions above.
+        '''
+        if start:
+            traversal = self.inorder(start.left, traversal)
+            traversal.append(start.value)
+            traversal = self.inorder(start.right, traversal)
+        return traversal
+
     def is_bst_satisfied(self):
         '''
         Whenever you implement a data structure,
