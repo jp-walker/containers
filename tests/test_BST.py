@@ -322,7 +322,6 @@ def test__BST_iterable_2(xs):
 
     assert list(bst1) == list(bst2)
 
-
 @given(xs=ints)
 def test__BST_eq(xs):
     '''

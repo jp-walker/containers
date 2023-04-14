@@ -89,6 +89,13 @@ class BST(BinaryTree):
             traversal.append(start.value)
             traversal = self.inorder(start.right, traversal)
         return traversal
+    @staticmethod
+    def bst_yield(node):
+        if node.left:
+            yield from BST.bst_yield(node.left)
+        yield node.value
+        if node.right:
+            yield from BST.bst_yield(node.right)
 
     def is_bst_satisfied(self):
         '''
